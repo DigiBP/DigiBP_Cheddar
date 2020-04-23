@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="DMRDesicionTable" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.0">
+  <decision id="Decision_Category" name="Category Decision">
+    <extensionElements>
+      <biodi:bounds x="530" y="230" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Service Category">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>IncCategory</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_18v264j">
+          <text>"Plumber","Electrician","Building Mainenance","Heating &amp; Ventilation"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_1sygb1i" label="Damage Value">
+        <inputExpression id="LiteralExpression_1odrc1r" typeRef="integer">
+          <text>DamageValueNumb</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Forward Decision" name="forwarding" typeRef="string">
+        <outputValues id="UnaryTests_1bx4quh">
+          <text>"manual","auto"</text>
+        </outputValues>
+      </output>
+      <output id="OutputClause_15zmis2" label="Remark for manual processing" name="remark" typeRef="string">
+        <outputValues id="UnaryTests_0uuwbww">
+          <text>"Standard - high value offer","Error - Categorization failed!"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_07xlyp1">
+        <inputEntry id="UnaryTests_1fwayhz">
+          <text>"Plumber"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0uy07il">
+          <text>&gt; 1000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yvsahm">
+          <text>"manual"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0kywys6">
+          <text>"Standard - high value offer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1edfhad">
+        <inputEntry id="UnaryTests_1lf25a9">
+          <text>"Plumber"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1p13pko">
+          <text>&lt;= 1000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ho2hci">
+          <text>"auto"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1wr8gfl">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1q2a2cg">
+        <inputEntry id="UnaryTests_021pm37">
+          <text>"Electrician"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jffrxd">
+          <text>&gt; 500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1gqpxiw">
+          <text>"manual"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0osvbsi">
+          <text>"Standard - high value offer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0xog5y9">
+        <inputEntry id="UnaryTests_0jz3t4x">
+          <text>"Electrician"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1r381ul">
+          <text>&lt;= 500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0o5fyyc">
+          <text>"auto"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1gx82w0">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1awciso">
+        <inputEntry id="UnaryTests_148ikkl">
+          <text>"Building Mainenance"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01t2rrp">
+          <text>&gt; 1500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tajq4n">
+          <text>"manual"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tz95xm">
+          <text>"Standard - high value offer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01we880">
+        <inputEntry id="UnaryTests_0ld1whk">
+          <text>"Building Mainenance"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1o29sdz">
+          <text>&lt;= 1500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0q67zgz">
+          <text>"auto"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1jme18v">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1c53pwp">
+        <inputEntry id="UnaryTests_0q3qipa">
+          <text>"Heating &amp; Ventilation"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ugvi6s">
+          <text>&gt; 800</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1590q9d">
+          <text>"manual"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0wt65pv">
+          <text>"Standard - high value offer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ozu7g4">
+        <inputEntry id="UnaryTests_0kq0kzq">
+          <text>"Heating &amp; Ventilation"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02tq6gf">
+          <text>&lt;= 800</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_16rl1r1">
+          <text>"auto"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tydwa0">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_17eef2r">
+        <description>Fallback - Categorization not clear</description>
+        <inputEntry id="UnaryTests_1cdg7yj">
+          <text>not("Plumber","Electrician","Building Mainenance","Heating &amp; Ventilation")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19egx36">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1aibdky">
+          <text>"manual"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0vo3vaz">
+          <text>"Error - Categorization failed!"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
