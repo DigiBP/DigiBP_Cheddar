@@ -26,4 +26,4 @@ Last but not least, there could be also possibilities for various integrations (
 - [Patrik Rüegg](https://www.linkedin.com/in/patrik-r%C3%BCegg-18718180/)
 
 ## Lecturers / Coaches
-- [Emanuele Laurenzi](https://www.google.ch)
+- [Emanuele Laurenzi](https://www.linkedin.com/in/emanuelelaurenzi)
