@@ -1,17 +1,13 @@
-Hello, itsa me - Mario! 
+# DigiBP - Team Cheddar - Documentation
 
-It's Luigi!
+## Introduction: Tenant Damage Report Process
+In the following the current as-is process for the tenant damage report is described. In the existing process, the Property Owner, Tenant, Property Manager and Various Maintenance Service Partner are involved. The process starts as soon as the Property Manager receives the tenant damage report from the tenant. After receiving the tenant damage report, the Prop-erty Manager's first task is to record and categorize this request in the system. As soon as this is done, the Property Manager prepares a request for offer to various maintenance Service Partners. Once the Maintenance Service Partners have received the request for offer from the Property Manager and subsequently submitted an offer, the Property Manager processes the offers received and classifies them according to the amount.
 
+In the following the current as-is process for the tenant damage report is described. In the existing process, the Property Owner, Tenant, Property Manager and Various Maintenance Service Partner are involved. The process starts as soon as the Property Manager receives the tenant damage report from the tenant. After receiving the tenant damage report, the Prop-erty Manager's first task is to record and categorize this request in the system. As soon as this is done, the Property Manager prepares a request for offer to various maintenance Service Partners. Once the Maintenance Service Partners have received the request for offer from the Property Manager and subsequently submitted an offer, the Property Manager processes the offers received and classifies them according to the amount.
 
-test new
+If the amount of the offer is less than 5000 Swiss francs, the supervisor of the Property Man-ager has to approve the offer make the decision whether the amount of the offer is acceptable. As soon as the Property Manager's supervisor has approved the amount of the offer, the order is placed. The Property Manager is notified by the Maintenance Service Provider as soon as the order is finished. Then the Tenant is going to be notified by the Property Manager with a specified deadline to pay the invoice. The Maintenance Service Provider prepares an invoice and hands it over to the Property Manager. Having received the invoice from the Tenant, the Property Manager processes the invoice. The Tenant has two weeks the possibility to give a feedback to process. Once the invoice has been processed and the problem has been solved, the Property Manager authorizes the payment. However, if the invoice was processed by the Property Manager, but the problem could not be solved, an incident case is created and esca-lated to the next higher level.
 
-
-# DigiBP Camunda Template
-
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-[![Deploy to Heroku](https://img.shields.io/badge/deploy%20to-Heroku-6762a6.svg?longCache=true)](https://heroku.com/deploy)
-
-## Releases
+If the amount is higher than or equal to 5000 Swiss francs, the Property Owner notifies the Property Owner and informs him about the current situation. After the Property Owner sends the Tenant's Feedback to the Property Owner, the Property Manager processes the decision of the Property Owner. Then the order is placed and the Maintenance Service Provider in-formed. Once the order is finished, the Maintenance Service Provider notifies the Property Manager about the status. Subsequently, the Tenant is going to be notified by the Property Manager with a specified deadline to pay the invoice. The Maintenance Service Provider pre-pares an invoice and hands it over to the Property Manager. Having received the invoice from the Tenant, the Property Manager processes the invoice. The Tenant has two weeks the pos-sibility to give a feedback to the process. Once the invoice has been processed and the prob-lem has been solved, the Property Manager authorizes the payment. However, if the invoice was processed by the Property Manager, but the problem could not be solved, an incident case is created and escalated to the next higher level.
 
 ### [3.4.0](https://github.com/DigiBP/digibp-camunda-template/tree/3.4.0)
 - Updating Camunda to 7.12.0
