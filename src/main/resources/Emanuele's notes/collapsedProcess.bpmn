@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0wve3bu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+  <bpmn:collaboration id="Collaboration_128bxr7">
+    <bpmn:participant id="Participant_0umkodd" name="Property Owner" processRef="Process_04p1pbv" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_04p1pbv" isExecutable="true">
+    <bpmn:endEvent id="EndEvent_1rv0ivh">
+      <bpmn:incoming>SequenceFlow_0l0zgws</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ler3xu" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Inbound-PODRDecision&#34;).processInstanceBusinessKey(&#34;TDR-ToBe-V1&#34;).correlateWithResult()}" />
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_0tzhfni" name="Start Decision Making">
+      <bpmn:outgoing>SequenceFlow_08lforu</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1siupu9" messageRef="Message_10wdhp0" />
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="ScriptTask_1uf6fxa" name="Process Decision Request &#38; decide on RFP" camunda:asyncAfter="true" scriptFormat="JavaScript">
+      <bpmn:incoming>SequenceFlow_08lforu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0l0zgws</bpmn:outgoing>
+      <bpmn:script>ProposalAccepted = ([true, false])[Math.random() * 2 | 0];</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0l0zgws" sourceRef="ScriptTask_1uf6fxa" targetRef="EndEvent_1rv0ivh" />
+    <bpmn:sequenceFlow id="SequenceFlow_08lforu" sourceRef="StartEvent_0tzhfni" targetRef="ScriptTask_1uf6fxa" />
+  </bpmn:process>
+  <bpmn:message id="Message_10wdhp0" name="Outbound-PropertyOwnerDecisionRequest" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_128bxr7">
+      <bpmndi:BPMNShape id="Participant_0umkodd_di" bpmnElement="Participant_0umkodd" isHorizontal="true">
+        <dc:Bounds x="160" y="100" width="540" height="190" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_1uf6fxa_di" bpmnElement="ScriptTask_1uf6fxa">
+        <dc:Bounds x="361" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1rv0ivh_di" bpmnElement="EndEvent_1rv0ivh">
+        <dc:Bounds x="562" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0tzhfni_di" bpmnElement="StartEvent_0tzhfni">
+        <dc:Bounds x="242" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="227" y="215" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0l0zgws_di" bpmnElement="SequenceFlow_0l0zgws">
+        <di:waypoint x="461" y="190" />
+        <di:waypoint x="562" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_08lforu_di" bpmnElement="SequenceFlow_08lforu">
+        <di:waypoint x="278" y="190" />
+        <di:waypoint x="361" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
