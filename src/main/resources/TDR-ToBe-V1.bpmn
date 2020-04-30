@@ -227,10 +227,10 @@
     <bpmn:sequenceFlow id="Flow_1hai8uz" name="no" sourceRef="Gateway_0kajtww" targetRef="Gateway_1asgzm4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ProposalAccepted == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_12x8j9g" name="yes" sourceRef="Gateway_0kajtww" targetRef="Activity_1tqyxww">
+    <bpmn:sequenceFlow id="Flow_12x8j9g" name="yes" sourceRef="Gateway_0kajtww" targetRef="http-connector-orders">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ProposalAccepted == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_07g58ch" sourceRef="Activity_1tqyxww" targetRef="Event_0bqrdfn" />
+    <bpmn:sequenceFlow id="Flow_07g58ch" sourceRef="http-connector-orders" targetRef="Event_0bqrdfn" />
     <bpmn:intermediateThrowEvent id="Event_0bqrdfn">
       <bpmn:incoming>Flow_07g58ch</bpmn:incoming>
       <bpmn:outgoing>Flow_0dda2g2</bpmn:outgoing>
@@ -317,7 +317,7 @@
       <bpmn:outgoing>Flow_0majo8h</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_07jqhk1" messageRef="Message_0azqg9f" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:serviceTask id="Activity_1tqyxww" name="Place Order">
+    <bpmn:serviceTask id="http-connector-orders" name="Place Order">
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
@@ -1129,7 +1129,7 @@
       <bpmndi:BPMNShape id="Activity_1gbh4vi_di" bpmnElement="Activity_1e1fzc0">
         <dc:Bounds x="2800" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1f7081b_di" bpmnElement="Activity_1tqyxww">
+      <bpmndi:BPMNShape id="Activity_1f7081b_di" bpmnElement="http-connector-orders">
         <dc:Bounds x="3520" y="920" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
