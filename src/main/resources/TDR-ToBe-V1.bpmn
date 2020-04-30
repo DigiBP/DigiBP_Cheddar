@@ -230,10 +230,6 @@
     <bpmn:sequenceFlow id="Flow_12x8j9g" name="yes" sourceRef="Gateway_0kajtww" targetRef="Activity_1tqyxww">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ProposalAccepted == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:task id="Activity_1tqyxww" name="Place Order">
-      <bpmn:incoming>Flow_12x8j9g</bpmn:incoming>
-      <bpmn:outgoing>Flow_07g58ch</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_07g58ch" sourceRef="Activity_1tqyxww" targetRef="Event_0bqrdfn" />
     <bpmn:intermediateThrowEvent id="Event_0bqrdfn">
       <bpmn:incoming>Flow_07g58ch</bpmn:incoming>
@@ -321,6 +317,30 @@
       <bpmn:outgoing>Flow_0majo8h</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_07jqhk1" messageRef="Message_0azqg9f" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_1tqyxww" name="Place Order">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">out = JSON.stringify({
+	"Timestamp": dateTime(),
+        "ConfirmedDamageValue": ConfirmedDamageValue
+});</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/y6g1kskhrn17swyzjq7dllssgio9bmzb</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector-orders</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12x8j9g</bpmn:incoming>
+      <bpmn:outgoing>Flow_07g58ch</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_17zthw4">
       <bpmn:text>14 Day expiration period?!?</bpmn:text>
     </bpmn:textAnnotation>
@@ -887,9 +907,6 @@
           <dc:Bounds x="3473" y="862" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Activity_1tqyxww_di" bpmnElement="Activity_1tqyxww">
-        <dc:Bounds x="3520" y="920" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_12x8j9g_di" bpmnElement="Flow_12x8j9g">
         <di:waypoint x="3430" y="905" />
         <di:waypoint x="3430" y="960" />
@@ -1111,6 +1128,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_1gbh4vi_di" bpmnElement="Activity_1e1fzc0">
         <dc:Bounds x="2800" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f7081b_di" bpmnElement="Activity_1tqyxww">
+        <dc:Bounds x="3520" y="920" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
