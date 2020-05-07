@@ -30,6 +30,7 @@
           <camunda:formField id="forwarding" label="forwarding" type="string" />
           <camunda:formField id="ProposalAccepted" label="Proposal accepted?" type="boolean" defaultValue="false" />
           <camunda:formField id="ProblemSolved" label="Problem solved?" type="boolean" defaultValue="false" />
+          <camunda:formField id="DamageID" label="Damage ID" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1cxa5wf</bpmn:outgoing>
@@ -159,6 +160,7 @@
     <bpmn:exclusiveGateway id="Gateway_1f8ms08">
       <bpmn:incoming>Flow_18b1j23</bpmn:incoming>
       <bpmn:incoming>Flow_05nvyg2</bpmn:incoming>
+      <bpmn:incoming>Flow_1vve04q</bpmn:incoming>
       <bpmn:outgoing>Flow_1fpqsdp</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Activity_08z8ug9" name="Accept Proposal">
@@ -208,19 +210,13 @@
     <bpmn:sequenceFlow id="Flow_1geadrc" sourceRef="Event_118fpyi" targetRef="Activity_1mqw9ma" />
     <bpmn:sequenceFlow id="Flow_18b1j23" sourceRef="Activity_1mqw9ma" targetRef="Gateway_1f8ms08" />
     <bpmn:sequenceFlow id="Flow_05nvyg2" sourceRef="Activity_05otkg3" targetRef="Gateway_1f8ms08" />
-    <bpmn:sequenceFlow id="Flow_1fpqsdp" sourceRef="Gateway_1f8ms08" targetRef="Gateway_0inc2is" />
+    <bpmn:sequenceFlow id="Flow_1fpqsdp" sourceRef="Gateway_1f8ms08" targetRef="Gateway_0kajtww" />
     <bpmn:sequenceFlow id="Flow_1ffti76" name="&#60;= 1000" sourceRef="Gateway_1iw3bid" targetRef="Activity_08z8ug9">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ConfirmedDamageValue &lt;= 1000}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1vve04q" sourceRef="Activity_08z8ug9" targetRef="Gateway_0inc2is" />
-    <bpmn:sequenceFlow id="Flow_1sdbs97" sourceRef="Gateway_0inc2is" targetRef="Gateway_0kajtww" />
-    <bpmn:exclusiveGateway id="Gateway_0inc2is">
-      <bpmn:incoming>Flow_1fpqsdp</bpmn:incoming>
-      <bpmn:incoming>Flow_1vve04q</bpmn:incoming>
-      <bpmn:outgoing>Flow_1sdbs97</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1vve04q" sourceRef="Activity_08z8ug9" targetRef="Gateway_1f8ms08" />
     <bpmn:exclusiveGateway id="Gateway_0kajtww" name="Accept proposal?">
-      <bpmn:incoming>Flow_1sdbs97</bpmn:incoming>
+      <bpmn:incoming>Flow_1fpqsdp</bpmn:incoming>
       <bpmn:outgoing>Flow_1hai8uz</bpmn:outgoing>
       <bpmn:outgoing>Flow_12x8j9g</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -266,7 +262,7 @@
       <bpmn:incoming>Flow_0dp6fot</bpmn:incoming>
       <bpmn:outgoing>Flow_13u5hds</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_02moiec" sourceRef="Activity_1qlzlra" targetRef="Gateway_0gx3ubj" />
+    <bpmn:sequenceFlow id="Flow_02moiec" sourceRef="Activity_1qlzlra" targetRef="http-connector2" />
     <bpmn:sequenceFlow id="Flow_0kv7d2m" sourceRef="Activity_084rwwt" targetRef="Gateway_0gx3ubj" />
     <bpmn:sequenceFlow id="Flow_1qgx1y4" sourceRef="Gateway_0gx3ubj" targetRef="Gateway_1asgzm4" />
     <bpmn:sequenceFlow id="Flow_0kjqq9g" name="no" sourceRef="Gateway_1asgzm4" targetRef="Activity_05ntxwl">
@@ -278,17 +274,18 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1tp9jrg" sourceRef="Activity_0lc5guy" targetRef="Event_0oiq5d3" />
     <bpmn:sequenceFlow id="Flow_16dtnh5" sourceRef="Gateway_1560it5" targetRef="Event_1o6udfx" />
-    <bpmn:userTask id="Activity_1qlzlra" name="Process Invoice">
-      <bpmn:incoming>Flow_1n4i2c8</bpmn:incoming>
-      <bpmn:outgoing>Flow_02moiec</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:userTask id="Activity_084rwwt" name="Process feedback (incl. none)">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ProblemSolved" label="Problem solved" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0majo8h</bpmn:incoming>
       <bpmn:outgoing>Flow_0kv7d2m</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:parallelGateway id="Gateway_0gx3ubj">
-      <bpmn:incoming>Flow_02moiec</bpmn:incoming>
       <bpmn:incoming>Flow_0kv7d2m</bpmn:incoming>
+      <bpmn:incoming>Flow_0udux0s</bpmn:incoming>
       <bpmn:outgoing>Flow_1qgx1y4</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:exclusiveGateway id="Gateway_1asgzm4" name="Initial problem solved?">
@@ -329,7 +326,7 @@
             </camunda:inputParameter>
             <camunda:inputParameter name="payload">
               <camunda:script scriptFormat="JavaScript">out = JSON.stringify({
-	"Timestamp": new Date().getDate() + '.' + (new Date().getMonth()+1) + '.' + new Date().getFullYear() + " / " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
+	"Timestamp": new Date().getDate() + '.' + (new Date().getMonth()+1) + '.' + new Date().getFullYear() + " / " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(), "DamageID": DamageID,
         "ConfirmedDamageValue": ConfirmedDamageValue
 });</camunda:script>
             </camunda:inputParameter>
@@ -340,6 +337,40 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12x8j9g</bpmn:incoming>
       <bpmn:outgoing>Flow_07g58ch</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_1qlzlra" name="Process Invoice">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="BilledAmmount" label="Billed Ammount" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1n4i2c8</bpmn:incoming>
+      <bpmn:outgoing>Flow_02moiec</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0udux0s" sourceRef="http-connector2" targetRef="Gateway_0gx3ubj" />
+    <bpmn:serviceTask id="http-connector2" name="Add Billed ammount">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">out = JSON.stringify({
+	"InvoiceReceived": new Date().getDate() + '.' + (new Date().getMonth()+1) + '.' + new Date().getFullYear() + " / " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(), "DamageID": DamageID,
+        "BilledAmmount": BilledAmmount
+});</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="url">https://hook.integromat.com/r8zjxgdyvaaeyenz08qluiormfcapr2i</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector2</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02moiec</bpmn:incoming>
+      <bpmn:outgoing>Flow_0udux0s</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_17zthw4">
       <bpmn:text>14 Day expiration period?!?</bpmn:text>
@@ -439,7 +470,7 @@
     </bpmn:task>
     <bpmn:task id="Activity_12g9vfc" name="Send invoice" camunda:asyncAfter="true">
       <bpmn:extensionElements>
-        <camunda:failedJobRetryTimeCycle>R5/PT5S</camunda:failedJobRetryTimeCycle>
+        <camunda:failedJobRetryTimeCycle>R6/PT10S</camunda:failedJobRetryTimeCycle>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0zq5f9l</bpmn:incoming>
       <bpmn:outgoing>Flow_098kixo</bpmn:outgoing>
@@ -866,12 +897,9 @@
         <di:waypoint x="3260" y="990" />
         <di:waypoint x="3260" y="905" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Gateway_0inc2is_di" bpmnElement="Gateway_0inc2is" isMarkerVisible="true">
-        <dc:Bounds x="3295" y="855" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1fpqsdp_di" bpmnElement="Flow_1fpqsdp">
         <di:waypoint x="3285" y="880" />
-        <di:waypoint x="3295" y="880" />
+        <di:waypoint x="3405" y="880" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ffti76_di" bpmnElement="Flow_1ffti76">
         <di:waypoint x="1620" y="855" />
@@ -886,12 +914,8 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1vve04q_di" bpmnElement="Flow_1vve04q">
         <di:waypoint x="1810" y="760" />
-        <di:waypoint x="3320" y="760" />
-        <di:waypoint x="3320" y="855" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1sdbs97_di" bpmnElement="Flow_1sdbs97">
-        <di:waypoint x="3345" y="880" />
-        <di:waypoint x="3405" y="880" />
+        <di:waypoint x="3260" y="760" />
+        <di:waypoint x="3260" y="855" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Gateway_0kajtww_di" bpmnElement="Gateway_0kajtww" isMarkerVisible="true">
         <dc:Bounds x="3405" y="855" width="50" height="50" />
@@ -962,21 +986,20 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1n4i2c8_di" bpmnElement="Flow_1n4i2c8">
         <di:waypoint x="4268" y="1070" />
-        <di:waypoint x="4420" y="1070" />
+        <di:waypoint x="4330" y="1070" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_1pj74wx_di" bpmnElement="Activity_0smbjvd">
         <dc:Bounds x="3920" y="920" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0bfnx7x_di" bpmnElement="Activity_1qlzlra">
-        <dc:Bounds x="4420" y="1030" width="100" height="80" />
+        <dc:Bounds x="4330" y="1030" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1le8kd3_di" bpmnElement="Activity_084rwwt">
         <dc:Bounds x="4470" y="920" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_02moiec_di" bpmnElement="Flow_02moiec">
-        <di:waypoint x="4520" y="1070" />
-        <di:waypoint x="4670" y="1070" />
-        <di:waypoint x="4670" y="985" />
+        <di:waypoint x="4430" y="1070" />
+        <di:waypoint x="4470" y="1070" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Gateway_0vzrje8_di" bpmnElement="Gateway_0gx3ubj">
         <dc:Bounds x="4645" y="935" width="50" height="50" />
@@ -1131,6 +1154,14 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1f7081b_di" bpmnElement="http-connector">
         <dc:Bounds x="3520" y="920" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0udux0s_di" bpmnElement="Flow_0udux0s">
+        <di:waypoint x="4570" y="1070" />
+        <di:waypoint x="4670" y="1070" />
+        <di:waypoint x="4670" y="985" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0k7fy6s_di" bpmnElement="http-connector2">
+        <dc:Bounds x="4470" y="1030" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
