@@ -30,7 +30,6 @@
           <camunda:formField id="forwarding" label="forwarding" type="string" />
           <camunda:formField id="ProposalAccepted" label="Proposal accepted?" type="boolean" defaultValue="false" />
           <camunda:formField id="ProblemSolved" label="Problem solved?" type="boolean" defaultValue="false" />
-          <camunda:formField id="DamageID" label="Damage ID" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1cxa5wf</bpmn:outgoing>
@@ -324,7 +323,6 @@
             <camunda:inputParameter name="payload">
               <camunda:script scriptFormat="JavaScript">out = JSON.stringify({
 	"Timestamp": new Date().getDate() + '.' + (new Date().getMonth()+1) + '.' + new Date().getFullYear() + " / " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
-"DamageID": DamageID,
         "ConfirmedDamageValue": ConfirmedDamageValue
 });</camunda:script>
             </camunda:inputParameter>
