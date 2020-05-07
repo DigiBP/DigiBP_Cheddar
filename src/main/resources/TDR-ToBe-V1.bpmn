@@ -366,7 +366,7 @@
             </camunda:inputParameter>
             <camunda:inputParameter name="url">https://hook.integromat.com/r8zjxgdyvaaeyenz08qluiormfcapr2i</camunda:inputParameter>
           </camunda:inputOutput>
-          <camunda:connectorId>http-connector2</camunda:connectorId>
+          <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02moiec</bpmn:incoming>
