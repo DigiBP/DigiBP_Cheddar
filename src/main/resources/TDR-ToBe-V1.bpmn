@@ -121,7 +121,6 @@
     </bpmn:userTask>
     <bpmn:userTask id="Activity_1ii3nb1" name="Process &#38; compare 2nd proposal">
       <bpmn:incoming>Flow_1o48dcy</bpmn:incoming>
-      <bpmn:outgoing>Flow_08lsahx</bpmn:outgoing>
       <bpmn:outgoing>Flow_16j5cib</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_0mf5t1z" name="Cheapest ammount of offers?">
@@ -135,15 +134,9 @@
     </bpmn:userTask>
     <bpmn:intermediateThrowEvent id="Event_1fbpd4h">
       <bpmn:incoming>Flow_1hjjy71</bpmn:incoming>
-      <bpmn:outgoing>Flow_18z6ydw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_14djlsp</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_19nfxde" messageRef="Message_12gzugu" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-PropertyOwnerDecisionRequest&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:intermediateCatchEvent id="Event_118fpyi">
-      <bpmn:incoming>Flow_18z6ydw</bpmn:incoming>
-      <bpmn:incoming>Flow_08lsahx</bpmn:incoming>
-      <bpmn:outgoing>Flow_1geadrc</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1tvu86x" messageRef="Message_12s500d" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:userTask id="Activity_1mqw9ma" name="Process Property Owner Decision">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -197,7 +190,6 @@
     <bpmn:sequenceFlow id="Flow_028dka8" sourceRef="Activity_0wy3pcb" targetRef="Event_0eswuzf" />
     <bpmn:sequenceFlow id="Flow_0c9dzk2" sourceRef="Event_0eswuzf" targetRef="Event_1bt581b" />
     <bpmn:sequenceFlow id="Flow_1o48dcy" sourceRef="Event_1bt581b" targetRef="Activity_1ii3nb1" />
-    <bpmn:sequenceFlow id="Flow_08lsahx" sourceRef="Activity_1ii3nb1" targetRef="Event_118fpyi" />
     <bpmn:sequenceFlow id="Flow_16j5cib" sourceRef="Activity_1ii3nb1" targetRef="Gateway_0mf5t1z" />
     <bpmn:sequenceFlow id="Flow_19dbicd" name="&#62; 5000" sourceRef="Gateway_0mf5t1z" targetRef="Activity_016w4xy">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ConfirmedDamageValue &gt; 5000}</bpmn:conditionExpression>
@@ -206,7 +198,6 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ConfirmedDamageValue &lt;= 5000}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1hjjy71" sourceRef="Activity_016w4xy" targetRef="Event_1fbpd4h" />
-    <bpmn:sequenceFlow id="Flow_18z6ydw" sourceRef="Event_1fbpd4h" targetRef="Event_118fpyi" />
     <bpmn:sequenceFlow id="Flow_1geadrc" sourceRef="Event_118fpyi" targetRef="Activity_1mqw9ma" />
     <bpmn:sequenceFlow id="Flow_18b1j23" sourceRef="Activity_1mqw9ma" targetRef="Gateway_1f8ms08" />
     <bpmn:sequenceFlow id="Flow_05nvyg2" sourceRef="Activity_05otkg3" targetRef="Gateway_1f8ms08" />
@@ -372,6 +363,12 @@
       <bpmn:incoming>Flow_02moiec</bpmn:incoming>
       <bpmn:outgoing>Flow_0udux0s</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="Event_118fpyi">
+      <bpmn:incoming>Flow_14djlsp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1geadrc</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1tvu86x" messageRef="Message_12s500d" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_14djlsp" sourceRef="Event_1fbpd4h" targetRef="Event_118fpyi" />
     <bpmn:textAnnotation id="TextAnnotation_17zthw4">
       <bpmn:text>14 Day expiration period?!?</bpmn:text>
     </bpmn:textAnnotation>
@@ -506,11 +503,6 @@
     <bpmn:endEvent id="Event_00j99dz">
       <bpmn:incoming>Flow_1wpe9mu</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:intermediateThrowEvent id="Event_0twa4vw">
-      <bpmn:incoming>Flow_178dyxm</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wpe9mu</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_16356dp" messageRef="Message_12s500d" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Inbound-PODRDecision&#34;).correlateWithResult()}" />
-    </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_16cextb" sourceRef="Event_02chy3j" targetRef="Activity_1e1fzc0" />
     <bpmn:sequenceFlow id="Flow_178dyxm" sourceRef="Activity_1e1fzc0" targetRef="Event_0twa4vw" />
     <bpmn:sequenceFlow id="Flow_1wpe9mu" sourceRef="Event_0twa4vw" targetRef="Event_00j99dz" />
@@ -518,9 +510,14 @@
       <bpmn:incoming>Flow_16cextb</bpmn:incoming>
       <bpmn:outgoing>Flow_178dyxm</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:intermediateThrowEvent id="Event_0twa4vw">
+      <bpmn:incoming>Flow_178dyxm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wpe9mu</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16356dp" messageRef="Message_12s500d" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Inbound-PODRDecisionNew&#34;).correlateWithResult()}" />
+    </bpmn:intermediateThrowEvent>
   </bpmn:process>
   <bpmn:message id="Message_12gzugu" name="Outbound-PropertyOwnerDecisionRequest" />
-  <bpmn:message id="Message_12s500d" name="Inbound-PODRDecision" />
+  <bpmn:message id="Message_12s500d" name="Inbound-PODRDecisionNew" />
   <bpmn:message id="Message_16ka2im" name="Outbound-Order" />
   <bpmn:message id="Message_0wrxlpx" name="Inbound-OrderComplete" />
   <bpmn:message id="Message_1hkax6e" name="Outbound-FinalizationNotification" />
@@ -797,10 +794,6 @@
       <bpmndi:BPMNShape id="Activity_0jfpmik_di" bpmnElement="Activity_1ii3nb1">
         <dc:Bounds x="2230" y="840" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_08lsahx_di" bpmnElement="Flow_08lsahx">
-        <di:waypoint x="2330" y="880" />
-        <di:waypoint x="2952" y="880" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Gateway_0mf5t1z_di" bpmnElement="Gateway_0mf5t1z" isMarkerVisible="true">
         <dc:Bounds x="2405" y="855" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -842,10 +835,6 @@
       <bpmndi:BPMNShape id="Event_1qbkz1x_di" bpmnElement="Event_1fbpd4h">
         <dc:Bounds x="2712" y="862" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_18z6ydw_di" bpmnElement="Flow_18z6ydw">
-        <di:waypoint x="2748" y="880" />
-        <di:waypoint x="2952" y="880" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0wlkhbp_di" bpmnElement="Event_118fpyi">
         <dc:Bounds x="2952" y="862" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -1163,6 +1152,10 @@
       <bpmndi:BPMNShape id="Activity_0k7fy6s_di" bpmnElement="http-connector2">
         <dc:Bounds x="4470" y="1030" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_14djlsp_di" bpmnElement="Flow_14djlsp">
+        <di:waypoint x="2748" y="880" />
+        <di:waypoint x="2952" y="880" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
