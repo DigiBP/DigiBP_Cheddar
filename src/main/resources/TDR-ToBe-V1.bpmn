@@ -108,7 +108,7 @@
     <bpmn:intermediateThrowEvent id="Event_0eswuzf">
       <bpmn:incoming>Flow_028dka8</bpmn:incoming>
       <bpmn:outgoing>Flow_0c9dzk2</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1jhi7zj" messageRef="Message_16gvg37" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-2nd-RFP&#34;).correlateWithResult()}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1jhi7zj" messageRef="Message_16gvg37" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-2nd-RFPNew&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="Event_1bt581b">
       <bpmn:incoming>Flow_0c9dzk2</bpmn:incoming>
@@ -496,7 +496,7 @@
   <bpmn:message id="Message_1yspc19" name="Outbound-Auto-RFP-1" />
   <bpmn:message id="Message_1hajxt8" name="Outbound-Manual-RFP-1" />
   <bpmn:message id="Message_0i8y2mp" name="Inbound-Manual-RFP-1" />
-  <bpmn:message id="Message_16gvg37" name="Outbound-2nd-RFP" />
+  <bpmn:message id="Message_16gvg37" name="Outbound-2nd-RFPNew" />
   <bpmn:message id="Message_1wunxqn" name="Inbound-2nd-RFP" />
   <bpmn:process id="PropertyOwnerDecision" isExecutable="true">
     <bpmn:startEvent id="Event_02chy3j">
