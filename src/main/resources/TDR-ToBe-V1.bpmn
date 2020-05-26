@@ -108,7 +108,7 @@
     <bpmn:intermediateThrowEvent id="Event_0eswuzf">
       <bpmn:incoming>Flow_028dka8</bpmn:incoming>
       <bpmn:outgoing>Flow_0c9dzk2</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1jhi7zj" messageRef="Message_16gvg37" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-2nd-RFPNew&#34;).correlateWithResult()}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1jhi7zj" messageRef="Message_16gvg37" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-2nd-RFP&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="Event_1bt581b">
       <bpmn:incoming>Flow_0c9dzk2</bpmn:incoming>
@@ -243,7 +243,7 @@
     <bpmn:intermediateThrowEvent id="Event_13k1dek">
       <bpmn:incoming>Flow_13u5hds</bpmn:incoming>
       <bpmn:outgoing>Flow_1w6ek7b</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0s59o9i" messageRef="Message_1hkax6e" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-FinalizationNotificationNew&#34;).correlateWithResult()}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0s59o9i" messageRef="Message_1hkax6e" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-FinalizationNotification&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1w6ek7b" sourceRef="Event_13k1dek" targetRef="Gateway_1560it5" />
     <bpmn:parallelGateway id="Gateway_1560it5">
@@ -496,7 +496,7 @@
   <bpmn:message id="Message_1yspc19" name="Outbound-Auto-RFP-1" />
   <bpmn:message id="Message_1hajxt8" name="Outbound-Manual-RFP-1" />
   <bpmn:message id="Message_0i8y2mp" name="Inbound-Manual-RFP-1" />
-  <bpmn:message id="Message_16gvg37" name="Outbound-2nd-RFPNew" />
+  <bpmn:message id="Message_16gvg37" name="Outbound-2nd-RFP" />
   <bpmn:message id="Message_1wunxqn" name="Inbound-2nd-RFP" />
   <bpmn:process id="PropertyOwnerDecision" isExecutable="true">
     <bpmn:startEvent id="Event_02chy3j">
@@ -523,7 +523,7 @@
   <bpmn:message id="Message_12s500d" name="Inbound-PODRDecision" />
   <bpmn:message id="Message_16ka2im" name="Outbound-Order" />
   <bpmn:message id="Message_0wrxlpx" name="Inbound-OrderComplete" />
-  <bpmn:message id="Message_1hkax6e" name="Outbound-FinalizationNotificationNew" />
+  <bpmn:message id="Message_1hkax6e" name="Outbound-FinalizationNotification" />
   <bpmn:message id="Message_0azqg9f" name="Inbound-RepairVerification" />
   <bpmn:message id="Message_1f28dsb" name="Inbound-Invoice" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
