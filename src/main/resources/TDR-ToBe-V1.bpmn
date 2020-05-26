@@ -2,9 +2,9 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0lb6qpt" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.0">
   <bpmn:collaboration id="Collaboration_0csqoz9">
     <bpmn:participant id="Participant_09oridv" name="Property Manager" processRef="TDR-ToBe-V1" />
-    <bpmn:participant id="Participant_18gxsip" name="Tenant" processRef="Process_1i196ji" />
-    <bpmn:participant id="Participant_0mc0ce3" name="Various Maintenance Service Partners" processRef="Process_1iiglte" />
-    <bpmn:participant id="Participant_177ide8" name="Property Owner" processRef="Process_126fhnb" />
+    <bpmn:participant id="Participant_18gxsip" name="Tenant" processRef="TenantProcess" />
+    <bpmn:participant id="Participant_0mc0ce3" name="Various Maintenance Service Partners" processRef="MaintenanceServicePartners" />
+    <bpmn:participant id="Participant_177ide8" name="Property Owner" processRef="PropertyOwnerDecision" />
     <bpmn:messageFlow id="InboundDigitTDR" name="InboundDigitTDR" sourceRef="Participant_18gxsip" targetRef="Event_12qje1d" />
     <bpmn:messageFlow id="MessageFlow_17g4snl" sourceRef="Event_0fbqepa" targetRef="Event_1ceul02" />
     <bpmn:messageFlow id="MessageFlow_1p4c1wy" sourceRef="Event_1t75kqa" targetRef="Event_0d5z0su" />
@@ -119,7 +119,7 @@
       <bpmn:incoming>Flow_0fm8j92</bpmn:incoming>
       <bpmn:outgoing>Flow_028dka8</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_1ii3nb1" name="Process &#38; compare 2nd proposl">
+    <bpmn:userTask id="Activity_1ii3nb1" name="Process &#38; compare 2nd proposal">
       <bpmn:incoming>Flow_1o48dcy</bpmn:incoming>
       <bpmn:outgoing>Flow_08lsahx</bpmn:outgoing>
       <bpmn:outgoing>Flow_16j5cib</bpmn:outgoing>
@@ -377,7 +377,7 @@
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0d4erec" sourceRef="Activity_084rwwt" targetRef="TextAnnotation_17zthw4" />
   </bpmn:process>
-  <bpmn:process id="Process_1i196ji" isExecutable="true">
+  <bpmn:process id="TenantProcess" isExecutable="true">
     <bpmn:task id="Activity_1io4gpf" name="verify repair" camunda:asyncAfter="true">
       <bpmn:incoming>Flow_0fgc2lh</bpmn:incoming>
       <bpmn:outgoing>Flow_1fceyy8</bpmn:outgoing>
@@ -398,7 +398,7 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_08kqoy3" messageRef="Message_1hkax6e" />
     </bpmn:startEvent>
   </bpmn:process>
-  <bpmn:process id="Process_1iiglte" isExecutable="true">
+  <bpmn:process id="MaintenanceServicePartners" isExecutable="true">
     <bpmn:startEvent id="Event_0gcmzcf">
       <bpmn:outgoing>Flow_1qf35k8</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1qigrv3" messageRef="Message_1hajxt8" />
@@ -498,7 +498,7 @@
   <bpmn:message id="Message_0i8y2mp" name="Inbound-Manual-RFP-1" />
   <bpmn:message id="Message_16gvg37" name="Outbound-2nd-RFP" />
   <bpmn:message id="Message_1wunxqn" name="Inbound-2nd-RFP" />
-  <bpmn:process id="Process_126fhnb" isExecutable="true">
+  <bpmn:process id="PropertyOwnerDecision" isExecutable="true">
     <bpmn:startEvent id="Event_02chy3j">
       <bpmn:outgoing>Flow_16cextb</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_03jbgc0" messageRef="Message_12gzugu" />
@@ -509,7 +509,7 @@
     <bpmn:intermediateThrowEvent id="Event_0twa4vw">
       <bpmn:incoming>Flow_178dyxm</bpmn:incoming>
       <bpmn:outgoing>Flow_1wpe9mu</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_16356dp" messageRef="Message_12s500d" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Inbound-PODRDecision&#34;).processInstanceBusinessKey(&#34;TDR-ToBe-V1&#34;).correlateWithResult()}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16356dp" messageRef="Message_12s500d" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Inbound-PODRDecision&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_16cextb" sourceRef="Event_02chy3j" targetRef="Activity_1e1fzc0" />
     <bpmn:sequenceFlow id="Flow_178dyxm" sourceRef="Activity_1e1fzc0" targetRef="Event_0twa4vw" />
