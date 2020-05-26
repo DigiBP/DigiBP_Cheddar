@@ -12,13 +12,13 @@
     <bpmn:messageFlow id="MessageFlow_1181y9r" sourceRef="Event_04vn41o" targetRef="Event_0gcmzcf" />
     <bpmn:messageFlow id="MessageFlow_1vmxyk0" sourceRef="Event_0eswuzf" targetRef="Event_09nid7t" />
     <bpmn:messageFlow id="MessageFlow_10353ns" sourceRef="Event_0wvpycq" targetRef="Event_1bt581b" />
-    <bpmn:messageFlow id="MessageFlow_0xiohyz" sourceRef="Event_1fbpd4h" targetRef="Event_02chy3j" />
     <bpmn:messageFlow id="MessageFlow_0uotwru" sourceRef="Event_0twa4vw" targetRef="Event_118fpyi" />
     <bpmn:messageFlow id="MessageFlow_09f2mb1" sourceRef="Event_0bqrdfn" targetRef="Event_17vxjep" />
     <bpmn:messageFlow id="MessageFlow_140fmo7" sourceRef="Event_1w33ttm" targetRef="Event_1im5szq" />
     <bpmn:messageFlow id="MessageFlow_0hrk42l" sourceRef="Event_13k1dek" targetRef="Event_133bvta" />
     <bpmn:messageFlow id="MessageFlow_11p75w6" sourceRef="Event_14hr10d" targetRef="Event_1o6udfx" />
     <bpmn:messageFlow id="MessageFlow_1krk841" sourceRef="Event_0dowc4i" targetRef="Event_0v291ba" />
+    <bpmn:messageFlow id="MessageFlow_0xiohyz" sourceRef="Event_1fbpd4h" targetRef="Event_02chy3j" />
   </bpmn:collaboration>
   <bpmn:process id="TDR-ToBe-V1" name="TDR-ToBe-V1" isExecutable="true">
     <bpmn:startEvent id="Event_12qje1d" name="Receive Digital Tenant Damage Report">
@@ -140,7 +140,8 @@
     <bpmn:userTask id="Activity_1mqw9ma" name="Process Property Owner Decision">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="PropertyOwnerInstruction" type="string" />
+          <camunda:formField id="PropertyOwnerInstruction" label="Property Owner Instructions" type="string" />
+          <camunda:formField id="ProposalAccepted" label="Is the proposal accepted?" type="boolean" defaultValue="false" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1geadrc</bpmn:incoming>
@@ -197,7 +198,6 @@
     <bpmn:sequenceFlow id="Flow_0e6aci5" name="&#60;= 5000" sourceRef="Gateway_0mf5t1z" targetRef="Activity_05otkg3">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ConfirmedDamageValue &lt;= 5000}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1hjjy71" sourceRef="Activity_016w4xy" targetRef="Event_1fbpd4h" />
     <bpmn:sequenceFlow id="Flow_1geadrc" sourceRef="Event_118fpyi" targetRef="Activity_1mqw9ma" />
     <bpmn:sequenceFlow id="Flow_18b1j23" sourceRef="Activity_1mqw9ma" targetRef="Gateway_1f8ms08" />
     <bpmn:sequenceFlow id="Flow_05nvyg2" sourceRef="Activity_05otkg3" targetRef="Gateway_1f8ms08" />
@@ -368,6 +368,7 @@
       <bpmn:outgoing>Flow_1geadrc</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1tvu86x" messageRef="Message_12s500d" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1hjjy71" sourceRef="Activity_016w4xy" targetRef="Event_1fbpd4h" />
     <bpmn:sequenceFlow id="Flow_14djlsp" sourceRef="Event_1fbpd4h" targetRef="Event_118fpyi" />
     <bpmn:textAnnotation id="TextAnnotation_17zthw4">
       <bpmn:text>14 Day expiration period?!?</bpmn:text>
@@ -828,10 +829,6 @@
       <bpmndi:BPMNShape id="Participant_177ide8_di" bpmnElement="Participant_177ide8" isHorizontal="true">
         <dc:Bounds x="2410" y="80" width="1150" height="250" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1hjjy71_di" bpmnElement="Flow_1hjjy71">
-        <di:waypoint x="2630" y="880" />
-        <di:waypoint x="2712" y="880" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_1qbkz1x_di" bpmnElement="Event_1fbpd4h">
         <dc:Bounds x="2712" y="862" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -841,10 +838,6 @@
       <bpmndi:BPMNShape id="Event_1jvsqj9_di" bpmnElement="Event_02chy3j">
         <dc:Bounds x="2712" y="182" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="MessageFlow_0xiohyz_di" bpmnElement="MessageFlow_0xiohyz">
-        <di:waypoint x="2730" y="862" />
-        <di:waypoint x="2730" y="218" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_16cextb_di" bpmnElement="Flow_16cextb">
         <di:waypoint x="2748" y="200" />
         <di:waypoint x="2800" y="200" />
@@ -1152,6 +1145,14 @@
       <bpmndi:BPMNShape id="Activity_0k7fy6s_di" bpmnElement="http-connector2">
         <dc:Bounds x="4470" y="1030" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hjjy71_di" bpmnElement="Flow_1hjjy71">
+        <di:waypoint x="2630" y="880" />
+        <di:waypoint x="2712" y="880" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_0xiohyz_di" bpmnElement="MessageFlow_0xiohyz">
+        <di:waypoint x="2730" y="862" />
+        <di:waypoint x="2730" y="218" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14djlsp_di" bpmnElement="Flow_14djlsp">
         <di:waypoint x="2748" y="880" />
         <di:waypoint x="2952" y="880" />
