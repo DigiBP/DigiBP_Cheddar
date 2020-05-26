@@ -243,7 +243,7 @@
     <bpmn:intermediateThrowEvent id="Event_13k1dek">
       <bpmn:incoming>Flow_13u5hds</bpmn:incoming>
       <bpmn:outgoing>Flow_1w6ek7b</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0s59o9i" messageRef="Message_1hkax6e" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-FinalizationNotification&#34;).correlateWithResult()}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0s59o9i" messageRef="Message_1hkax6e" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-FinalizationNotificationNew&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1w6ek7b" sourceRef="Event_13k1dek" targetRef="Gateway_1560it5" />
     <bpmn:parallelGateway id="Gateway_1560it5">
@@ -378,7 +378,7 @@
     <bpmn:association id="Association_0d4erec" sourceRef="Activity_084rwwt" targetRef="TextAnnotation_17zthw4" />
   </bpmn:process>
   <bpmn:process id="TenantProcess" isExecutable="true">
-    <bpmn:task id="Activity_1io4gpf" name="verify repair" camunda:asyncAfter="true">
+    <bpmn:task id="Activity_1io4gpf" name="verify repair " camunda:asyncAfter="true">
       <bpmn:incoming>Flow_0fgc2lh</bpmn:incoming>
       <bpmn:outgoing>Flow_1fceyy8</bpmn:outgoing>
     </bpmn:task>
@@ -523,7 +523,7 @@
   <bpmn:message id="Message_12s500d" name="Inbound-PODRDecision" />
   <bpmn:message id="Message_16ka2im" name="Outbound-Order" />
   <bpmn:message id="Message_0wrxlpx" name="Inbound-OrderComplete" />
-  <bpmn:message id="Message_1hkax6e" name="Outbound-FinalizationNotification" />
+  <bpmn:message id="Message_1hkax6e" name="Outbound-FinalizationNotificationNew" />
   <bpmn:message id="Message_0azqg9f" name="Inbound-RepairVerification" />
   <bpmn:message id="Message_1f28dsb" name="Inbound-Invoice" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
