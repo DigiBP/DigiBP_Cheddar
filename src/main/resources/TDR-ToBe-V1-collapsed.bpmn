@@ -5,7 +5,7 @@
     <bpmn:participant id="Participant_18gxsip" name="Tenant" />
     <bpmn:participant id="Participant_0mc0ce3" name="Various Maintenance Service Partners" />
     <bpmn:participant id="Participant_177ide8" name="Property Owner" />
-    <bpmn:messageFlow id="InboundDigitTDR" name="InboundDigitTDR" sourceRef="Participant_18gxsip" targetRef="Event_12qje1d" />
+    <bpmn:messageFlow id="InboundDigitTDR" name="Inbound digital Tenant Damage Report (TDR)" sourceRef="Participant_18gxsip" targetRef="Event_12qje1d" />
     <bpmn:messageFlow id="MessageFlow_05mci5u" sourceRef="Activity_17reljb" targetRef="Participant_0mc0ce3" />
     <bpmn:messageFlow id="MessageFlow_0k7lkdb" sourceRef="Event_04vn41o" targetRef="Participant_0mc0ce3" />
     <bpmn:messageFlow id="MessageFlow_01ibc1d" sourceRef="Participant_0mc0ce3" targetRef="Event_1ceul02" />
@@ -40,7 +40,7 @@
       <bpmn:incoming>Flow_1cxa5wf</bpmn:incoming>
       <bpmn:outgoing>Flow_011kpre</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:businessRuleTask id="Activity_1w6vgta" name="Categorize Damage Report Initial Offering Request" camunda:resultVariable="CDResult" camunda:decisionRef="Decision_Category" camunda:mapDecisionResult="singleResult">
+    <bpmn:businessRuleTask id="Activity_1w6vgta" name="Categorize Tenant Damage Report" camunda:resultVariable="CDResult" camunda:decisionRef="Decision_Category" camunda:mapDecisionResult="singleResult">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="DamageValueNumb">
@@ -53,7 +53,7 @@
       <bpmn:incoming>Flow_011kpre</bpmn:incoming>
       <bpmn:outgoing>Flow_108tzvb</bpmn:outgoing>
     </bpmn:businessRuleTask>
-    <bpmn:exclusiveGateway id="Gateway_0hluu3h" name="Request Offer Process?">
+    <bpmn:exclusiveGateway id="Gateway_0hluu3h" name="Send offer manual?">
       <bpmn:incoming>Flow_108tzvb</bpmn:incoming>
       <bpmn:outgoing>Flow_0z9pusj</bpmn:outgoing>
       <bpmn:outgoing>Flow_0co0fpi</bpmn:outgoing>
@@ -73,7 +73,7 @@
       <bpmn:incoming>Flow_0p9z2z9</bpmn:incoming>
       <bpmn:outgoing>Flow_0zvt1ay</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_0whyy93" name="Process received proposal">
+    <bpmn:userTask id="Activity_0whyy93" name="Process received proposal RFP-1">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ConfirmedDamageValue" label="Confirmed Damage Value" type="string" />
@@ -82,7 +82,7 @@
       <bpmn:incoming>Flow_0zvt1ay</bpmn:incoming>
       <bpmn:outgoing>Flow_112aaiw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="Gateway_1iw3bid" name="Ammount of initial proposal?">
+    <bpmn:exclusiveGateway id="Gateway_1iw3bid" name="Amount over 1000 CHF?">
       <bpmn:incoming>Flow_112aaiw</bpmn:incoming>
       <bpmn:outgoing>Flow_0fm8j92</bpmn:outgoing>
       <bpmn:outgoing>Flow_1ffti76</bpmn:outgoing>
@@ -92,12 +92,12 @@
       <bpmn:outgoing>Flow_0c9dzk2</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1jhi7zj" messageRef="Message_16gvg37" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-2nd-RFP&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:intermediateCatchEvent id="Event_1bt581b">
+    <bpmn:intermediateCatchEvent id="Event_1bt581b" name="RFP-2">
       <bpmn:incoming>Flow_0c9dzk2</bpmn:incoming>
       <bpmn:outgoing>Flow_1o48dcy</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1szudmu" messageRef="Message_1wunxqn" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Activity_0wy3pcb" name="Request 2nd offer">
+    <bpmn:userTask id="Activity_0wy3pcb" name="Request second offer">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Message2Proposal" label="Second proposal message" type="string" />
@@ -106,7 +106,7 @@
       <bpmn:incoming>Flow_0fm8j92</bpmn:incoming>
       <bpmn:outgoing>Flow_028dka8</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_1ii3nb1" name="Process &#38; compare 2nd proposal">
+    <bpmn:userTask id="Activity_1ii3nb1" name="Compare proposals">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Accept1st" label="Accept first proposal / Propose first proposal to property owner?" type="boolean" defaultValue="false" />
@@ -116,7 +116,7 @@
       <bpmn:incoming>Flow_1o48dcy</bpmn:incoming>
       <bpmn:outgoing>Flow_16j5cib</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="Gateway_0mf5t1z" name="Cheapest ammount of offers?">
+    <bpmn:exclusiveGateway id="Gateway_0mf5t1z" name="Amount over 5000?">
       <bpmn:incoming>Flow_16j5cib</bpmn:incoming>
       <bpmn:outgoing>Flow_19dbicd</bpmn:outgoing>
       <bpmn:outgoing>Flow_0e6aci5</bpmn:outgoing>
@@ -145,7 +145,7 @@
       <bpmn:incoming>Flow_1geadrc</bpmn:incoming>
       <bpmn:outgoing>Flow_18b1j23</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_05otkg3" name="Decision of Account Manager">
+    <bpmn:userTask id="Activity_05otkg3" name="Accept proposal">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ProposalAccepted" label="Accept Proposal?" type="boolean" defaultValue="false" />
@@ -229,7 +229,7 @@
       <bpmn:outgoing>Flow_1geadrc</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1tvu86x" messageRef="Message_12s500d" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="Activity_0smbjvd" name="Tenant notification with deadline for repair verification" camunda:asyncAfter="true" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-FinalizationNotification&#34;).correlateWithResult()}">
+    <bpmn:sendTask id="Activity_0smbjvd" name="Send repair verification form" camunda:asyncAfter="true" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-FinalizationNotification&#34;).correlateWithResult()}">
       <bpmn:incoming>Flow_0dp6fot</bpmn:incoming>
       <bpmn:outgoing>Flow_1mwuu21</bpmn:outgoing>
     </bpmn:sendTask>
@@ -255,7 +255,7 @@
     <bpmn:endEvent id="Event_0oiq5d3">
       <bpmn:incoming>Flow_1tp9jrg</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_0lc5guy" name="Payment authorization">
+    <bpmn:userTask id="Activity_0lc5guy" name="Authorize payment">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Authorization" label="Initials of authorizing Employee" type="string" />
@@ -278,7 +278,7 @@
       <bpmn:outgoing>Flow_1n4i2c8</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_146dvnu" messageRef="Message_1f28dsb" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Activity_1qlzlra" name="Process Invoice">
+    <bpmn:userTask id="Activity_1qlzlra" name="Process invoice">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="BilledAmmount" label="Billed Ammount" type="string" />
@@ -287,7 +287,7 @@
       <bpmn:incoming>Flow_1n4i2c8</bpmn:incoming>
       <bpmn:outgoing>Flow_02moiec</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="http-connector2" name="Add Billed ammount">
+    <bpmn:serviceTask id="http-connector2" name="Add billed amount">
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
@@ -311,7 +311,7 @@
       <bpmn:incoming>Flow_02moiec</bpmn:incoming>
       <bpmn:outgoing>Flow_0udux0s</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_0i3e5fx" name="Manual RFP">
+    <bpmn:userTask id="Activity_0i3e5fx" name="Send manual RFP">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Proposal1Message" label="First Proposal Message" type="string" />
@@ -320,11 +320,11 @@
       <bpmn:incoming>Flow_0co0fpi</bpmn:incoming>
       <bpmn:outgoing>Flow_0v2hrhx</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sendTask id="Activity_17reljb" name="Automatic RFP" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-Auto-RFP-1&#34;).correlateWithResult()}">
+    <bpmn:sendTask id="Activity_17reljb" name="Send automatic RFP" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-Auto-RFP-1&#34;).correlateWithResult()}">
       <bpmn:incoming>Flow_0z9pusj</bpmn:incoming>
       <bpmn:outgoing>Flow_0noyp9n</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:receiveTask id="Task_15e6h6r" name="Receive Tenent Feedback" messageRef="Message_0azqg9f">
+    <bpmn:receiveTask id="Task_15e6h6r" name="Receive tenant repair verification form" messageRef="Message_0azqg9f">
       <bpmn:incoming>Flow_16dtnh5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0w3r432</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -454,7 +454,7 @@ period, continue after waiting 14 days without tenant feedback</bpmn:text>
         <di:waypoint x="300" y="310" />
         <di:waypoint x="300" y="572" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="272" y="441" width="86" height="14" />
+          <dc:Bounds x="311" y="441" width="77" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_1pfl4w2_di" bpmnElement="Activity_1pfl4w2">
@@ -478,7 +478,7 @@ period, continue after waiting 14 days without tenant feedback</bpmn:text>
       <bpmndi:BPMNShape id="Gateway_0hluu3h_di" bpmnElement="Gateway_0hluu3h" isMarkerVisible="true">
         <dc:Bounds x="725" y="565" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="715" y="636" width="70" height="27" />
+          <dc:Bounds x="724" y="636" width="52" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0z9pusj_di" bpmnElement="Flow_0z9pusj">
@@ -544,7 +544,7 @@ period, continue after waiting 14 days without tenant feedback</bpmn:text>
       <bpmndi:BPMNShape id="Gateway_1iw3bid_di" bpmnElement="Gateway_1iw3bid" isMarkerVisible="true">
         <dc:Bounds x="1595" y="565" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1577" y="622" width="87" height="27" />
+          <dc:Bounds x="1590" y="622" width="63" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_112aaiw_di" bpmnElement="Flow_112aaiw">
@@ -571,6 +571,9 @@ period, continue after waiting 14 days without tenant feedback</bpmn:text>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0o2cfua_di" bpmnElement="Event_1bt581b">
         <dc:Bounds x="2122" y="572" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2125" y="542" width="32" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1o48dcy_di" bpmnElement="Flow_1o48dcy">
         <di:waypoint x="2158" y="590" />
@@ -585,7 +588,7 @@ period, continue after waiting 14 days without tenant feedback</bpmn:text>
       <bpmndi:BPMNShape id="Gateway_0mf5t1z_di" bpmnElement="Gateway_0mf5t1z" isMarkerVisible="true">
         <dc:Bounds x="2405" y="565" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2400" y="520" width="60" height="40" />
+          <dc:Bounds x="2399" y="520" width="63" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_16j5cib_di" bpmnElement="Flow_16j5cib">

@@ -86,7 +86,7 @@
       </rule>
       <rule id="DecisionRule_1awciso">
         <inputEntry id="UnaryTests_148ikkl">
-          <text>"Building Mainenance"</text>
+          <text>"Building Maintenance"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_01t2rrp">
           <text>&gt; 1500</text>
@@ -100,7 +100,7 @@
       </rule>
       <rule id="DecisionRule_01we880">
         <inputEntry id="UnaryTests_0ld1whk">
-          <text>"Building Mainenance"</text>
+          <text>"Building Maintenance"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1o29sdz">
           <text>&lt;= 1500</text>
@@ -143,7 +143,7 @@
       <rule id="DecisionRule_17eef2r">
         <description>Fallback - Categorization not clear</description>
         <inputEntry id="UnaryTests_1cdg7yj">
-          <text>not("Plumber","Electrician","Building Mainenance","Heating &amp; Ventilation")</text>
+          <text>not("Plumber","Electrician","Building Maintenance","Heating &amp; Ventilation")</text>
         </inputEntry>
         <inputEntry id="UnaryTests_19egx36">
           <text></text>
