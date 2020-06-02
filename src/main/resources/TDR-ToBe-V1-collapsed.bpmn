@@ -73,7 +73,7 @@
       <bpmn:incoming>Flow_0p9z2z9</bpmn:incoming>
       <bpmn:outgoing>Flow_0zvt1ay</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_0whyy93" name="Process received proposal RFP-1">
+    <bpmn:userTask id="Activity_0whyy93" name="Process received proposal RFP-1" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ConfirmedDamageValue" label="Confirmed Damage Value" type="string" />
@@ -97,7 +97,7 @@
       <bpmn:outgoing>Flow_1o48dcy</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1szudmu" messageRef="Message_1wunxqn" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Activity_0wy3pcb" name="Request second offer">
+    <bpmn:userTask id="Activity_0wy3pcb" name="Request second offer" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Message2Proposal" label="Second proposal message" type="string" />
@@ -106,7 +106,7 @@
       <bpmn:incoming>Flow_0fm8j92</bpmn:incoming>
       <bpmn:outgoing>Flow_028dka8</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_1ii3nb1" name="Compare proposals">
+    <bpmn:userTask id="Activity_1ii3nb1" name="Compare proposals" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Accept1st" label="Accept first proposal / Propose first proposal to property owner?" type="boolean" defaultValue="false" />
@@ -121,7 +121,7 @@
       <bpmn:outgoing>Flow_19dbicd</bpmn:outgoing>
       <bpmn:outgoing>Flow_0e6aci5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_016w4xy" name="Notify property owner">
+    <bpmn:userTask id="Activity_016w4xy" name="Notify property owner" camunda:assignee="account manager">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="MessageToOwner" label="Message to Owner" type="string" />
@@ -135,7 +135,7 @@
       <bpmn:outgoing>Flow_14djlsp</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_19nfxde" messageRef="Message_12gzugu" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;Outbound-PropertyOwnerDecisionRequest&#34;).correlateWithResult()}" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:userTask id="Activity_1mqw9ma" name="Process Property Owner Decision">
+    <bpmn:userTask id="Activity_1mqw9ma" name="Process Property Owner Decision" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="PropertyOwnerInstruction" label="Property Owner Instructions" type="string" />
@@ -145,7 +145,7 @@
       <bpmn:incoming>Flow_1geadrc</bpmn:incoming>
       <bpmn:outgoing>Flow_18b1j23</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_05otkg3" name="Accept proposal">
+    <bpmn:userTask id="Activity_05otkg3" name="Accept proposal" camunda:assignee="account manager">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ProposalAccepted" label="Accept Proposal?" type="boolean" defaultValue="false" />
@@ -191,7 +191,7 @@
       <bpmn:outgoing>Flow_1nxnsew</bpmn:outgoing>
       <bpmn:outgoing>Flow_16dtnh5</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:userTask id="Activity_084rwwt" name="Process feedback (incl. none)">
+    <bpmn:userTask id="Activity_084rwwt" name="Process feedback (incl. none)" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ProblemSolved" label="Problem solved" type="boolean" />
@@ -255,7 +255,7 @@
     <bpmn:endEvent id="Event_0oiq5d3">
       <bpmn:incoming>Flow_1tp9jrg</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_0lc5guy" name="Authorize payment">
+    <bpmn:userTask id="Activity_0lc5guy" name="Authorize payment" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Authorization" label="Initials of authorizing Employee" type="string" />
@@ -264,7 +264,7 @@
       <bpmn:incoming>Flow_0tdsrlx</bpmn:incoming>
       <bpmn:outgoing>Flow_1tp9jrg</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_05ntxwl" name="Prepare incident case">
+    <bpmn:userTask id="Activity_05ntxwl" name="Prepare incident case" camunda:assignee="account manager">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="IncidentCasePrepared" label="Incident case prepared?" type="boolean" />
@@ -278,7 +278,7 @@
       <bpmn:outgoing>Flow_1n4i2c8</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_146dvnu" messageRef="Message_1f28dsb" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Activity_1qlzlra" name="Process invoice">
+    <bpmn:userTask id="Activity_1qlzlra" name="Process invoice" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="BilledAmmount" label="Billed Ammount" type="string" />
@@ -311,7 +311,7 @@
       <bpmn:incoming>Flow_02moiec</bpmn:incoming>
       <bpmn:outgoing>Flow_0udux0s</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_0i3e5fx" name="Send manual RFP">
+    <bpmn:userTask id="Activity_0i3e5fx" name="Send manual RFP" camunda:assignee="clerk">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="Proposal1Message" label="First Proposal Message" type="string" />
