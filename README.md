@@ -25,5 +25,5 @@ Last but not least, there could be also possibilities for various integrations (
 - [Volkan Yesilyurt](https://www.linkedin.com/in/volkan-yesilyurt-579282160/)
 - [Patrik Rüegg](https://www.linkedin.com/in/patrik-r%C3%BCegg-18718180/)
 
-## Lecturers / Coaches
+## Coach
 - [Emanuele Laurenzi](https://www.linkedin.com/in/emanuelelaurenzi)
